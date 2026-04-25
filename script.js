@@ -22,9 +22,39 @@ const inlineSalutation  = document.getElementById('inline-salutation');
 
 // ─── URL PARAMETERS & PRE-FILL ───────────────────────
 const urlParams = new URLSearchParams(window.location.search);
-const paramName = urlParams.get('name');
-const paramGen = urlParams.get('gen');
-const paramSalutation = urlParams.get('salutation');
+let paramName = urlParams.get('name');
+let paramGen = urlParams.get('gen');
+let paramSalutation = urlParams.get('salutation');
+const paramToken = urlParams.get('token');
+
+// Function to safely decode UTF-8 Base64
+function decodeBase64UTF8(base64Str) {
+  try {
+    // Revert WebSafe Base64 characters and add padding
+    let str = base64Str.replace(/-/g, '+').replace(/_/g, '/');
+    while (str.length % 4) str += '=';
+    const binaryStr = atob(str);
+    const bytes = new Uint8Array(binaryStr.length);
+    for (let i = 0; i < binaryStr.length; i++) {
+      bytes[i] = binaryStr.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
+  } catch (e) {
+    return null;
+  }
+}
+
+if (paramToken) {
+  const decoded = decodeBase64UTF8(paramToken);
+  if (decoded) {
+    const parts = decoded.split('|');
+    if (parts.length >= 2) {
+      paramName = parts[0];
+      paramGen = parts[1];
+      paramSalutation = parts[2] || 'Anh';
+    }
+  }
+}
 
 if (paramName && paramGen) {
   // Hide the form inputs
@@ -39,6 +69,12 @@ if (paramName && paramGen) {
   const openBtn = document.getElementById('open-btn');
   if (openBtn) {
     openBtn.innerHTML = '<span class="btn-icon">🍊</span>Bắt Đầu';
+  }
+
+  // Hide parameters from address bar immediately for a cleaner look
+  if (window.history && window.history.replaceState) {
+    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+    window.history.replaceState(null, '', cleanUrl);
   }
 }
 
