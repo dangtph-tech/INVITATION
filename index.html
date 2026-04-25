@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư Mời | Kỷ Niệm 25 Năm YEC-NEU | Tapestry of Remembrance</title>
+  <meta name="description" content="Thư mời tương tác kỷ niệm 25 năm CLB Nhà Kinh Tế Trẻ YEC-NEU — Tapestry of Remembrance. Hoài niệm, kết nối và kiến tạo ý nghĩa qua các thế hệ." />
+  <meta property="og:title" content="Kỷ Niệm 25 Năm YEC-NEU | Tapestry of Remembrance" />
+  <meta property="og:description" content="Thư mời tham dự sự kiện kỷ niệm 25 năm CLB Nhà Kinh Tế Trẻ — Hoài niệm, kết nối và kiến tạo ý nghĩa từ những ký ức được đan cài qua các thế hệ." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Background Orbs -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
+
+  <!-- ===== SCREEN 1: WELCOME FORM ===== -->
+  <section id="welcome-screen" aria-label="Form nhập thông tin">
+    <div class="welcome-card">
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <img
+          src="logo_25th.png"
+          alt="Logo Kỷ Niệm 25 Năm YEC-NEU"
+          id="logo-img"
+          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 120 120\'%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'55\' fill=\'%23F97316\'/%3E%3Ctext x=\'50%25\' y=\'42%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'32\' font-weight=\'bold\' fill=\'white\' font-family=\'Verdana\'%3E25%3C/text%3E%3Ctext x=\'50%25\' y=\'65%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'11\' fill=\'rgba(255,255,255,0.9)\' font-family=\'Verdana\'%3EYEC-NEU%3C/text%3E%3C/svg%3E'"
+        />
+      </div>
+
+      <!-- Heading -->
+      <p class="welcome-pretitle">CLB Nhà Kinh Tế Trẻ</p>
+      <h1 class="welcome-title">Kỷ Niệm 25 Năm YEC-NEU</h1>
+      <p class="welcome-subtitle">Tapestry of Remembrance</p>
+      <div class="divider"></div>
+      <p id="welcome-desc" style="font-size:0.72rem; color:#78350F; margin-bottom:1.4rem; line-height:1.6;">
+        Nhập thông tin của bạn để nhận thư mời cá nhân hoá.
+      </p>
+
+      <!-- Form -->
+      <form id="invitation-form" novalidate>
+        <div id="form-inputs">
+          <div class="form-group">
+            <label>Bạn là</label>
+            <div class="radio-group">
+              <label class="radio-option" for="salutation-anh">
+                <input type="radio" id="salutation-anh" name="salutation" value="Anh" checked />
+                <span class="radio-custom"></span>
+                <span class="radio-label">Anh</span>
+              </label>
+              <label class="radio-option" for="salutation-chi">
+                <input type="radio" id="salutation-chi" name="salutation" value="Chị" />
+                <span class="radio-custom"></span>
+                <span class="radio-label">Chị</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name-input">Họ và tên</label>
+            <input
+              id="name-input"
+              type="text"
+              placeholder="Nguyễn Văn A"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="gen-input">Thế hệ</label>
+            <input
+              id="gen-input"
+              type="text"
+              placeholder="Ví dụ: Gen 20"
+              required
+            />
+          </div>
+        </div>
+        <button type="submit" id="open-btn">
+          <span class="btn-icon">🍊</span>
+          Mở Thư Mời
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ===== SCREEN 2: CANVAS (Falling Oranges) ===== -->
+  <canvas id="falling-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== SCREEN 3: INVITATION ===== -->
+  <section id="invitation-screen" aria-label="Thư mời sự kiện">
+    <div style="width:100%; max-width:520px; margin:auto; display:flex; flex-direction:column; align-items:stretch;">
+
+      <!-- The Invitation Card (this will be captured by html2canvas) -->
+      <div class="invitation-card" id="invitation-card">
+
+        <!-- Card Header -->
+        <div class="card-header">
+          <div class="card-header-badge">✦ THIỆP MỜI CHÍNH THỨC ✦</div>
+          <img
+            src="logo_25th.png"
+            alt="Logo YEC 25"
+            class="card-header-logo"
+            onerror="this.style.display='none'"
+          />
+          <h2 class="card-event-name">YEC-NEU · 25 NĂM</h2>
+          <p class="card-event-year">CLB Nhà Kinh Tế Trẻ — Đại Học Kinh Tế Quốc Dân</p>
+          <span class="tapestry-label">✦ Tapestry of Remembrance ✦</span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+
+          <p class="greeting-line">Kính gửi <span id="display-salutation">Anh</span></p>
+          <p class="invitee-name" id="display-name">Nguyễn Văn A</p>
+          <span class="invitee-gen" id="display-gen">Gen 20</span>
+
+          <p class="invitation-text">
+            CLB Nhà Kinh Tế Trẻ <strong>(YEC - NEU)</strong> trân trọng kính mời <span id="inline-salutation">anh</span> tham dự
+            chương trình kỷ niệm <strong>25 năm thành lập</strong> — một cột mốc lịch sử đánh dấu
+            hành trình phát triển không ngừng của những thế hệ YECer.
+          </p>
+
+          <p class="invitation-text">
+            Sự kiện mang chủ đề <strong>"Tapestry of Remembrance"</strong> —
+            <em>hoài niệm, kết nối và kiến tạo ý nghĩa từ những ký ức được đan cài qua các thế hệ</em>.
+            Nơi những câu chuyện gặp nhau, những kỷ niệm sống lại và tinh thần
+            <strong>YEC bất diệt</strong> được vinh danh.
+          </p>
+
+          <!-- Event Details -->
+          <div class="event-details-box">
+            <div class="event-detail-item">
+              <span class="event-detail-icon">📅</span>
+              <div class="event-detail-content">
+                <p class="event-detail-label">Thời gian</p>
+                <p class="event-detail-value">Thứ Bảy, 31 tháng 05 năm 2025</p>
+              </div>
+            </div>
+            <div class="event-detail-item">
+              <span class="event-detail-icon">🕕</span>
+              <div class="event-detail-content">
+                <p class="event-detail-label">Giờ bắt đầu</p>
+                <p class="event-detail-value">18:00 — Chào đón khách &nbsp;|&nbsp; 19:00 — Khai mạc</p>
+              </div>
+            </div>
+            <div class="event-detail-item">
+              <span class="event-detail-icon">📍</span>
+              <div class="event-detail-content">
+                <p class="event-detail-label">Địa điểm</p>
+                <p class="event-detail-value">Trường Đại học Kinh tế Quốc dân, Hà Nội</p>
+              </div>
+            </div>
+            <div class="event-detail-item">
+              <span class="event-detail-icon">👔</span>
+              <div class="event-detail-content">
+                <p class="event-detail-label">Dress Code</p>
+                <p class="event-detail-value">Smart Casual — Tông màu Cam & Trắng ưu tiên</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quote -->
+          <div class="closing-quote">
+            "Mỗi thế hệ YECer là một sợi chỉ trong tấm thảm ký ức —<br/>
+            cùng nhau, chúng ta dệt nên một di sản bất diệt."
+          </div>
+
+          <div class="orange-dots">
+            <span></span><span></span><span></span>
+          </div>
+
+          <!-- Signature -->
+          <div class="signature-section">
+            <div class="signature-left">
+              <p>Ban Tổ Chức</p>
+              <p style="font-size:0.6rem; font-weight:400; font-style:italic; color:#92400E; margin-top:0.1rem;">YEC-NEU · 25 Years</p>
+            </div>
+            <div class="signature-right">
+              Trân trọng kính mời 🍊
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End .invitation-card -->
+
+      <!-- Action Buttons -->
+      <div class="action-buttons" id="action-buttons">
+        <button class="action-btn" id="download-btn" aria-label="Tải thiệp về máy">
+          <span>⬇️</span> Tải Thiệp Về Máy
+        </button>
+        <button class="action-btn" id="share-btn" aria-label="Chia sẻ thiệp">
+          <span>🔗</span> Chia Sẻ
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Toast -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
