@@ -3,6 +3,112 @@
    Tapestry of Remembrance
    ==================================================== */
 
+// ─── CONTINUOUS BACKGROUND PARTICLES ─────────────────
+const bgCanvas = document.getElementById('bg-particles');
+const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
+let bgParticlesList = [];
+const NUM_PARTICLES = 50;
+
+function resizeBgCanvas() {
+  if (!bgCanvas) return;
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+
+function initBgParticles() {
+  if (!bgCanvas) return;
+  resizeBgCanvas();
+  bgParticlesList = [];
+  for (let i = 0; i < NUM_PARTICLES; i++) {
+    bgParticlesList.push(createBgParticle(true));
+  }
+}
+
+function createBgParticle(randomY = false) {
+  const types = ['circle', 'diamond', 'line', 'cross'];
+  const type = types[Math.floor(Math.random() * types.length)];
+  const size = Math.random() * 3 + 1.5; 
+  const colors = ['#F97316', '#F59E0B', '#D97706', '#E5E7EB']; // Orange, Gold, Bronze, Light gray
+  
+  return {
+    x: Math.random() * window.innerWidth,
+    y: randomY ? Math.random() * window.innerHeight : -20,
+    size: size,
+    type: type,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    speedY: Math.random() * 0.5 + 0.2, // Gentle falling speed
+    speedX: (Math.random() - 0.5) * 0.2, // Slight horizontal drift
+    rot: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.02,
+    opacity: Math.random() * 0.4 + 0.15
+  };
+}
+
+function drawBgParticles() {
+  if (!bgCtx) return;
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+  
+  bgParticlesList.forEach(p => {
+    bgCtx.save();
+    bgCtx.translate(p.x, p.y);
+    bgCtx.rotate(p.rot);
+    bgCtx.globalAlpha = p.opacity;
+    bgCtx.fillStyle = p.color;
+    bgCtx.strokeStyle = p.color;
+    
+    if (p.type === 'circle') {
+      bgCtx.beginPath();
+      bgCtx.arc(0, 0, p.size, 0, Math.PI * 2);
+      bgCtx.fill();
+    } else if (p.type === 'diamond') {
+      bgCtx.beginPath();
+      bgCtx.moveTo(0, -p.size);
+      bgCtx.lineTo(p.size, 0);
+      bgCtx.lineTo(0, p.size);
+      bgCtx.lineTo(-p.size, 0);
+      bgCtx.closePath();
+      bgCtx.fill();
+    } else if (p.type === 'line') {
+      bgCtx.beginPath();
+      bgCtx.moveTo(-p.size, 0);
+      bgCtx.lineTo(p.size, 0);
+      bgCtx.lineWidth = 1;
+      bgCtx.stroke();
+    } else if (p.type === 'cross') {
+      bgCtx.beginPath();
+      bgCtx.moveTo(-p.size, 0);
+      bgCtx.lineTo(p.size, 0);
+      bgCtx.moveTo(0, -p.size);
+      bgCtx.lineTo(0, p.size);
+      bgCtx.lineWidth = 1.5;
+      bgCtx.stroke();
+    }
+    
+    bgCtx.restore();
+    
+    // Update position
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.rot += p.rotSpeed;
+    
+    // Reset if off screen (recycle at top)
+    if (p.y > bgCanvas.height + 10) {
+      Object.assign(p, createBgParticle(false));
+      p.opacity = Math.random() * 0.4 + 0.15; // Retain opacity
+    }
+    if (p.x > bgCanvas.width + 10) p.x = -10;
+    if (p.x < -10) p.x = bgCanvas.width + 10;
+  });
+  
+  requestAnimationFrame(drawBgParticles);
+}
+
+if (bgCanvas) {
+  window.addEventListener('resize', resizeBgCanvas);
+  initBgParticles();
+  drawBgParticles();
+}
+
 // ─── DOM REFERENCES ──────────────────────────────────
 const form            = document.getElementById('invitation-form');
 const nameInput       = document.getElementById('name-input');
@@ -480,3 +586,113 @@ function showToast(msg, duration = 3000) {
     toast.classList.remove('show');
   }, duration);
 }
+
+// ─── AUDIO CONTROLS (VINTAGE PLAYER) ─────────────────
+const bgMusic = document.getElementById('bg-music');
+const vinylWrapper = document.getElementById('vinyl-wrapper');
+const timeDisplay = document.getElementById('time-display');
+const progressWrapper = document.getElementById('progress-wrapper');
+const progressBar = document.getElementById('progress-bar');
+let isMusicPlaying = false;
+let hasInteractedWithMusic = false;
+
+// Format seconds into m:ss
+function formatTime(seconds) {
+  if (isNaN(seconds)) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+// Update UI on time update
+if (bgMusic) {
+  bgMusic.addEventListener('timeupdate', () => {
+    const cur = bgMusic.currentTime;
+    const max = bgMusic.duration;
+    if (!isNaN(max) && max > 0) {
+      const percentage = (cur / max) * 100;
+      if (progressBar) progressBar.style.width = `${percentage}%`;
+      if (timeDisplay) timeDisplay.textContent = `${formatTime(cur)} / ${formatTime(max)}`;
+    }
+  });
+
+  bgMusic.addEventListener('loadedmetadata', () => {
+    if (timeDisplay) timeDisplay.textContent = `0:00 / ${formatTime(bgMusic.duration)}`;
+  });
+}
+
+function toggleMusic() {
+  if (!bgMusic) return;
+  if (isMusicPlaying) {
+    bgMusic.pause();
+    isMusicPlaying = false;
+    if (vinylWrapper) vinylWrapper.classList.remove('playing');
+  } else {
+    bgMusic.play().then(() => {
+      isMusicPlaying = true;
+      if (vinylWrapper) vinylWrapper.classList.add('playing');
+    }).catch(err => {
+      console.log('Audio play failed:', err);
+    });
+  }
+}
+
+// Click vinyl to play/pause
+if (vinylWrapper) {
+  vinylWrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    hasInteractedWithMusic = true;
+    toggleMusic();
+  });
+}
+
+// Click progress bar to seek
+if (progressWrapper && bgMusic) {
+  progressWrapper.addEventListener('click', (e) => {
+    e.stopPropagation();
+    hasInteractedWithMusic = true;
+    
+    const rect = progressWrapper.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const percentage = clickX / width;
+    
+    // Fallback if metadata isn't full yet
+    if (bgMusic.duration && isFinite(bgMusic.duration)) {
+      const newTime = percentage * bgMusic.duration;
+      bgMusic.currentTime = newTime;
+    }
+    
+    if (!isMusicPlaying) toggleMusic();
+  });
+}
+
+// Aggressive autoplay function
+function attemptAutoplay() {
+  if (isMusicPlaying || !bgMusic) return;
+  bgMusic.volume = 0.5;
+  bgMusic.play().then(() => {
+    isMusicPlaying = true;
+    if (vinylWrapper) vinylWrapper.classList.add('playing');
+    hasInteractedWithMusic = true;
+  }).catch(() => {
+    // Autoplay blocked by browser. Wait for user moving mouse/scrolling/clicking
+  });
+}
+
+// Try autoplay immediately
+window.addEventListener('DOMContentLoaded', attemptAutoplay);
+
+// Fallback: Play music on ANY global interaction (mouse move, click, scroll, touch) if autoplay failed
+const interactionEvents = ['click', 'mousemove', 'scroll', 'touchstart', 'keydown'];
+interactionEvents.forEach(eventType => {
+  document.addEventListener(eventType, (e) => {
+    // Nếu chưa tương tác với nhạc và chưa đang gõ phím vào input form
+    if (e.target && e.target.tagName === 'INPUT') return;
+    
+    if (!hasInteractedWithMusic && !isMusicPlaying) {
+      hasInteractedWithMusic = true; // prevent multiple triggers
+      attemptAutoplay();
+    }
+  }, { once: false, passive: true });
+});

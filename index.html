@@ -8,12 +8,19 @@
   <meta property="og:title" content="Kỷ Niệm 25 Năm YEC-NEU | Tapestry of Remembrance" />
   <meta property="og:description" content="Thư mời tham dự sự kiện kỷ niệm 25 năm CLB Nhà Kinh Tế Trẻ — Hoài niệm, kết nối và kiến tạo ý nghĩa từ những ký ức được đan cài qua các thế hệ." />
   <meta property="og:type" content="website" />
+  <!-- Luxury Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <!-- html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 </head>
 
 <body>
+
+  <!-- Continuous Background Particles -->
+  <canvas id="bg-particles" aria-hidden="true"></canvas>
 
   <!-- Background Orbs -->
   <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -102,16 +109,20 @@
 
         <!-- Card Header -->
         <div class="card-header">
-          <div class="card-header-badge">✦ THIỆP MỜI CHÍNH THỨC ✦</div>
+          <div class="card-header-badge">Thiệp Mời Chính Thức</div>
           <img
             src="logo_25th.png"
             alt="Logo YEC 25"
             class="card-header-logo"
             onerror="this.style.display='none'"
           />
-          <h2 class="card-event-name">YEC-NEU · 25 NĂM</h2>
-          <p class="card-event-year">CLB Nhà Kinh Tế Trẻ — Đại Học Kinh Tế Quốc Dân</p>
-          <span class="tapestry-label">✦ Tapestry of Remembrance ✦</span>
+          <h2 class="card-event-name">YEC-NEU · 25 Năm</h2>
+          <p class="card-event-year">CLB Nhà Kinh Tế Trẻ &mdash; Đại Học Kinh Tế Quốc Dân</p>
+          <!-- Ornamental rule -->
+          <div class="card-rule" aria-hidden="true">
+            <div class="card-rule-diamond"></div>
+          </div>
+          <span class="tapestry-label">Tapestry of Remembrance</span>
         </div>
 
         <!-- Card Body -->
@@ -121,10 +132,16 @@
           <p class="invitee-name" id="display-name">Nguyễn Văn A</p>
           <span class="invitee-gen" id="display-gen">Gen 20</span>
 
+          <!-- Body ornamental divider -->
+          <div class="body-divider" aria-hidden="true">
+            <div class="body-divider-dot"></div>
+          </div>
+
           <p class="invitation-text">
-            CLB Nhà Kinh Tế Trẻ <strong>(YEC - NEU)</strong> trân trọng kính mời <span id="inline-salutation">anh</span> tham dự
-            chương trình kỷ niệm <strong>25 năm thành lập</strong> — một cột mốc lịch sử đánh dấu
-            hành trình phát triển không ngừng của những thế hệ YECer.
+            CLB Nhà Kinh Tế Trẻ <strong>(YEC&thinsp;&ndash;&thinsp;NEU)</strong> trân trọng kính mời
+            <span id="inline-salutation">anh</span> tham dự chương trình kỷ niệm
+            <strong>25 năm thành lập</strong> — một cột mốc lịch sử đánh dấu hành trình
+            phát triển không ngừng của những thế hệ YECer.
           </p>
 
           <p class="invitation-text">
@@ -139,21 +156,21 @@
             <div class="event-detail-item">
               <span class="event-detail-icon">📅</span>
               <div class="event-detail-content">
-                <p class="event-detail-label">Thời gian</p>
+                <p class="event-detail-label">Thời Gian</p>
                 <p class="event-detail-value">Thứ Bảy, 31 tháng 05 năm 2025</p>
               </div>
             </div>
             <div class="event-detail-item">
               <span class="event-detail-icon">🕕</span>
               <div class="event-detail-content">
-                <p class="event-detail-label">Giờ bắt đầu</p>
-                <p class="event-detail-value">18:00 — Chào đón khách &nbsp;|&nbsp; 19:00 — Khai mạc</p>
+                <p class="event-detail-label">Giờ Bắt Đầu</p>
+                <p class="event-detail-value">18:00 &mdash; Chào đón khách &nbsp;|&nbsp; 19:00 &mdash; Khai mạc</p>
               </div>
             </div>
             <div class="event-detail-item">
               <span class="event-detail-icon">📍</span>
               <div class="event-detail-content">
-                <p class="event-detail-label">Địa điểm</p>
+                <p class="event-detail-label">Địa Điểm</p>
                 <p class="event-detail-value">Trường Đại học Kinh tế Quốc dân, Hà Nội</p>
               </div>
             </div>
@@ -161,18 +178,18 @@
               <span class="event-detail-icon">👔</span>
               <div class="event-detail-content">
                 <p class="event-detail-label">Dress Code</p>
-                <p class="event-detail-value">Smart Casual — Tông màu Cam & Trắng ưu tiên</p>
+                <p class="event-detail-value">Smart Casual &mdash; Tông màu Cam &amp; Trắng ưu tiên</p>
               </div>
             </div>
           </div>
 
           <!-- Quote -->
           <div class="closing-quote">
-            "Mỗi thế hệ YECer là một sợi chỉ trong tấm thảm ký ức —<br/>
-            cùng nhau, chúng ta dệt nên một di sản bất diệt."
+            Mỗi thế hệ YECer là một sợi chỉ trong tấm thảm ký ức &mdash;<br/>
+            cùng nhau, chúng ta dệt nên một di sản bất diệt.
           </div>
 
-          <div class="orange-dots">
+          <div class="orange-dots" aria-hidden="true">
             <span></span><span></span><span></span>
           </div>
 
@@ -180,10 +197,10 @@
           <div class="signature-section">
             <div class="signature-left">
               <p>Ban Tổ Chức</p>
-              <p style="font-size:0.6rem; font-weight:400; font-style:italic; color:#92400E; margin-top:0.1rem;">YEC-NEU · 25 Years</p>
+              <p style="font-family:'Cormorant Garamond',Georgia,serif; font-size:0.65rem; font-weight:400; font-style:italic; color:var(--gold-dark); margin-top:0.15rem; letter-spacing:0.05em;">YEC-NEU &middot; 25 Years</p>
             </div>
             <div class="signature-right">
-              Trân trọng kính mời 🍊
+              Trân trọng kính mời
             </div>
           </div>
 
@@ -203,6 +220,34 @@
 
     </div>
   </section>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop preload="auto" autoplay="true">
+    <source src="YEC_Trong_Tôi_KLICKAUD.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Vintage Vinyl Music Player -->
+  <div id="vintage-player" class="player-container" aria-label="Trình phát nhạc" role="region">
+    <div class="vinyl-wrapper" id="vinyl-wrapper" title="Bật / Tắt Nhạc">
+      <div class="vinyl-tooltip">Anh/chị chạm để mở nhạc nhé 🎵</div>
+      <div class="vinyl-record" id="vinyl-record">
+        <div class="vinyl-lines"></div>
+        <div class="vinyl-highlight"></div>
+        <div class="vinyl-label"></div>
+      </div>
+    </div>
+    <div class="player-controls">
+      <div class="player-header">
+        <h3 class="player-title">YEC Trong Tôi</h3>
+        <span class="time-display" id="time-display">0:00 / 0:00</span>
+      </div>
+      <div class="progress-wrapper" id="progress-wrapper" title="Tua nhạc">
+        <div class="progress-container" id="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast -->
   <div id="toast" role="status" aria-live="polite"></div>
