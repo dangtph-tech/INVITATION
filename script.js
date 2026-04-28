@@ -629,6 +629,9 @@ function toggleMusic() {
     isMusicPlaying = false;
     if (vinylWrapper) vinylWrapper.classList.remove('playing');
   } else {
+    if (bgMusic.currentTime < 10) {
+      bgMusic.currentTime = 10;
+    }
     bgMusic.play().then(() => {
       isMusicPlaying = true;
       if (vinylWrapper) vinylWrapper.classList.add('playing');
@@ -672,6 +675,9 @@ if (progressWrapper && bgMusic) {
 function attemptAutoplay() {
   if (isMusicPlaying || !bgMusic) return;
   bgMusic.volume = 0.5;
+  if (bgMusic.currentTime < 10) {
+    bgMusic.currentTime = 10;
+  }
   bgMusic.play().then(() => {
     isMusicPlaying = true;
     if (vinylWrapper) vinylWrapper.classList.add('playing');
