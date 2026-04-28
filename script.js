@@ -121,7 +121,6 @@ const actionButtons   = document.getElementById('action-buttons');
 const displayName     = document.getElementById('display-name');
 const displayGen      = document.getElementById('display-gen');
 const downloadBtn     = document.getElementById('download-btn');
-const shareBtn        = document.getElementById('share-btn');
 const toast           = document.getElementById('toast');
 const displaySalutation = document.getElementById('display-salutation');
 const inlineSalutation  = document.getElementById('inline-salutation');
@@ -489,91 +488,7 @@ downloadBtn.addEventListener('click', async () => {
   }
 });
 
-// ─── SHARE BUTTON ────────────────────────────────────
-shareBtn.addEventListener('click', async () => {
-  const shareData = {
-    title: 'Thư Mời Kỷ Niệm 25 Năm YEC-NEU',
-    text : `Mình vừa nhận được thư mời đặc biệt trong sự kiện kỷ niệm 25 năm CLB Nhà Kinh Tế Trẻ (YEC-NEU) — "Tapestry of Remembrance". Cùng nhau hoài niệm, kết nối và vinh danh tinh thần YEC bất diệt! 🍊`,
-    url  : window.location.href,
-  };
-
-  // Try Web Share API with image if supported
-  if (navigator.share) {
-    try {
-      // Try to generate image first
-      if (typeof html2canvas !== 'undefined') {
-        const originalHTML = shareBtn.innerHTML;
-        shareBtn.innerHTML = '<span class="loading-spinner"></span> Đang chuẩn bị...';
-        shareBtn.disabled  = true;
-
-        try {
-          actionButtons.style.visibility = 'hidden';
-          const canvas  = await html2canvas(invitationCard, {
-            scale: 2, useCORS: true, allowTaint: true,
-            backgroundColor: '#FFFFFF', logging: false,
-          });
-          actionButtons.style.visibility = '';
-
-          const blob = await new Promise(resolve =>
-            canvas.toBlob(resolve, 'image/png', 1.0)
-          );
-          const file = new File(
-            [blob],
-            `Thiep_Moi_YEC25_${displayName.textContent.replace(/\s+/g, '_')}.png`,
-            { type: 'image/png' }
-          );
-
-          shareBtn.innerHTML = originalHTML;
-          shareBtn.disabled  = false;
-
-          // Check if the browser supports sharing files
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], title: shareData.title, text: shareData.text });
-          } else {
-            await navigator.share(shareData);
-          }
-        } catch (imgErr) {
-          actionButtons.style.visibility = '';
-          shareBtn.innerHTML = originalHTML;
-          shareBtn.disabled  = false;
-          // Fallback to text share
-          await navigator.share(shareData);
-        }
-      } else {
-        await navigator.share(shareData);
-      }
-      showToast('🎉 Chia sẻ thành công!');
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error('Share error:', err);
-        fallbackCopyLink();
-      }
-    }
-  } else {
-    // Desktop fallback: copy link
-    fallbackCopyLink();
-  }
-});
-
-function fallbackCopyLink() {
-  const textToCopy = window.location.href;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      showToast('🔗 Đã sao chép link! Dán vào Messenger, Zalo hoặc mạng xã hội nhé.');
-    });
-  } else {
-    // Older browser fallback
-    const el = document.createElement('textarea');
-    el.value = textToCopy;
-    el.style.position = 'fixed';
-    el.style.opacity  = '0';
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showToast('🔗 Đã sao chép link để chia sẻ!');
-  }
-}
+// (Removed share feature)
 
 // ─── TOAST HELPER ────────────────────────────────────
 let toastTimer = null;
