@@ -617,7 +617,8 @@ if (bgMusic) {
   });
 
   bgMusic.addEventListener('loadedmetadata', () => {
-    if (timeDisplay) timeDisplay.textContent = `0:00 / ${formatTime(bgMusic.duration)}`;
+    bgMusic.currentTime = 10; // Cắt (bỏ qua) 10s đầu
+    if (timeDisplay) timeDisplay.textContent = `0:10 / ${formatTime(bgMusic.duration)}`;
   });
 }
 
