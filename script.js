@@ -225,7 +225,7 @@ form.addEventListener('submit', (e) => {
   inlineSalutation.textContent = salutation.toLowerCase();
   // closing salutation
   if (closingSalLower) closingSalLower.textContent = salutation.toLowerCase();
-  if (closingSalUpper) closingSalUpper.textContent = salutation;
+  if (closingSalUpper) closingSalUpper.textContent = salutation.toLowerCase();
 
   // Start the transition sequence
   startSequence();
