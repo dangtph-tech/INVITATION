@@ -170,7 +170,9 @@ if (paramName && paramGen) {
 
   // Change the welcome description
   const welcomeDesc = document.getElementById('welcome-desc');
-  if (welcomeDesc) welcomeDesc.textContent = 'Nhấn nút phía dưới để bắt đầu nhận thư mời của bạn.';
+  if (welcomeDesc) {
+    welcomeDesc.textContent = `${paramSalutation} nhấn nút phía dưới để bắt đầu ạ!`;
+  }
 
   // Change button text
   const openBtn = document.getElementById('open-btn');
