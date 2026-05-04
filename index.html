@@ -43,7 +43,7 @@
 
       <!-- Heading -->
       <p class="welcome-pretitle">CLB Nhà Kinh Tế Trẻ</p>
-      <h1 class="welcome-title">Kỷ Niệm 25 Năm YEC-NEU</h1>
+      <h1 class="welcome-title">Kỷ Niệm 25 Năm YEC<span style="font-family: var(--font-heading);">-</span>NEU</h1>
       <p class="welcome-subtitle">Tapestry of Remembrance</p>
       <div class="divider"></div>
       <p id="welcome-desc" style="font-size:0.72rem; color:#78350F; margin-bottom:1.4rem; line-height:1.6;">
@@ -110,13 +110,15 @@
         <!-- Card Header -->
         <div class="card-header">
           <div class="card-header-badge">Thiệp Mời Chính Thức</div>
-          <img
-            src="logo_25th.png"
-            alt="Logo YEC 25"
-            class="card-header-logo"
-            onerror="this.style.display='none'"
-          />
-          <h2 class="card-event-name">YEC-NEU · 25 Năm</h2>
+          <div class="logo-wrapper">
+            <img
+              src="logo_25th.png"
+              alt="Logo YEC 25"
+              class="card-header-logo"
+              onerror="this.style.display='none'"
+            />
+          </div>
+          <h2 class="card-event-name"><span class="event-name-part">YEC<span style="font-family: var(--font-heading);">-</span>NEU</span><span class="event-name-sep"> · </span><span class="event-name-part">25 Năm</span></h2>
           <p class="card-event-year">CLB Nhà Kinh Tế Trẻ &mdash; Đại Học Kinh Tế Quốc Dân</p>
           <!-- Ornamental rule -->
           <div class="card-rule" aria-hidden="true">
@@ -153,6 +155,7 @@
 
           <!-- Event Details -->
           <div class="event-details-box">
+            <div class="event-details-inner">
             <div class="event-detail-item">
               <span class="event-detail-icon">📅</span>
               <div class="event-detail-content">
@@ -181,12 +184,13 @@
                 <p class="event-detail-value">Smart Casual &mdash; Tông màu Cam &amp; Trắng ưu tiên</p>
               </div>
             </div>
+            </div>
           </div>
 
           <!-- Quote -->
           <div class="closing-quote">
-            Mỗi thế hệ YECer là một sợi chỉ trong tấm thảm ký ức &mdash;<br/>
-            cùng nhau, chúng ta dệt nên một di sản bất diệt.
+            <div style="margin-bottom: 0.5rem;">Sự hiện diện của <span id="closing-salutation-lower">anh/chị</span> sẽ tiếp thêm nguồn động lực rất lớn cho chúng em.</div>
+            <div>Chúng em rất mong được gặp lại <span id="closing-salutation-upper">Anh/Chị</span> ạ!</div>
           </div>
 
           <div class="orange-dots" aria-hidden="true">
@@ -249,6 +253,6 @@
   <!-- Toast -->
   <div id="toast" role="status" aria-live="polite"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

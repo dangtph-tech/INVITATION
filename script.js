@@ -124,6 +124,8 @@ const downloadBtn     = document.getElementById('download-btn');
 const toast           = document.getElementById('toast');
 const displaySalutation = document.getElementById('display-salutation');
 const inlineSalutation  = document.getElementById('inline-salutation');
+const closingSalLower   = document.getElementById('closing-salutation-lower');
+const closingSalUpper   = document.getElementById('closing-salutation-upper');
 
 // ─── URL PARAMETERS & PRE-FILL ───────────────────────
 const urlParams = new URLSearchParams(window.location.search);
@@ -221,6 +223,9 @@ form.addEventListener('submit', (e) => {
   displaySalutation.textContent = salutation;
   // inline salutation inside body text — lowercase
   inlineSalutation.textContent = salutation.toLowerCase();
+  // closing salutation
+  if (closingSalLower) closingSalLower.textContent = salutation.toLowerCase();
+  if (closingSalUpper) closingSalUpper.textContent = salutation;
 
   // Start the transition sequence
   startSequence();

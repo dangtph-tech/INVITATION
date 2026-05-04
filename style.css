@@ -133,21 +133,25 @@ body {
 }
 
 .welcome-title {
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
   color: var(--ink);
   line-height: 1.25;
   margin-bottom: 0.4rem;
   letter-spacing: 0.01em;
+  font-variant-numeric: lining-nums;
+  -moz-font-feature-settings: "lnum";
+  -webkit-font-feature-settings: "lnum";
+  font-feature-settings: "lnum";
 }
 
 .welcome-subtitle {
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   font-weight: 300;
   font-style: italic;
-  color: var(--ink-light);
+  color: var(--ink-soft);
   margin-bottom: 1.8rem;
   letter-spacing: 0.04em;
 }
@@ -369,7 +373,7 @@ body {
 /* ── Card Header — CREAM with gold rule ── */
 .card-header {
   background: #FAF7F0;
-  padding: 2.5rem 2rem 2rem;
+  padding: 1.2rem 2rem 1.4rem;
   text-align: center;
   position: relative;
   border-bottom: 1px solid var(--border-gold);
@@ -406,26 +410,67 @@ body {
   text-transform: uppercase;
   padding: 0.3rem 1.1rem;
   border-radius: 0;
-  margin-bottom: 1.4rem;
+  margin-bottom: 0;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1rem auto 1.1rem;
+  width: 100%;
+}
+.logo-wrapper::before,
+.logo-wrapper::after {
+  content: '';
+  height: 1px;
+  width: 15%;
+  min-width: 40px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+.logo-wrapper::before {
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.logo-wrapper::after {
+  background: linear-gradient(to left, transparent, var(--gold));
 }
 
 .card-header-logo {
-  width: 72px; height: 72px;
+  width: 125px; height: 125px;
   object-fit: contain;
-  margin: 0 auto 1rem;
+  margin: 0;
   display: block;
   filter: drop-shadow(0 2px 8px rgba(160,120,74,0.3));
   position: relative; z-index: 1;
 }
 
 .card-event-name {
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 700;
+  line-height: 1;
   color: var(--ink);
   letter-spacing: 0.06em;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.7rem;
   position: relative; z-index: 1;
+  text-align: center;
+  font-variant-numeric: lining-nums;
+  -moz-font-feature-settings: "lnum";
+  -webkit-font-feature-settings: "lnum";
+  font-feature-settings: "lnum";
+}
+
+.card-event-name .event-name-part {
+  color: inherit;
+}
+.card-event-name .event-name-sep {
+  color: var(--gold-dark);
+  opacity: 0.7;
+  padding: 0 0.25em;
+  display: inline-block;
+  transform: translateY(-0.08em);
 }
 
 .card-event-year {
@@ -436,7 +481,7 @@ body {
   text-transform: uppercase;
   font-weight: 500;
   position: relative; z-index: 1;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
 }
 
 /* Horizontal rule with diamond */
@@ -444,7 +489,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin: 0.8rem auto;
+  margin: 1.2rem auto 1.4rem;
   opacity: 0.55;
   width: 80%;
 }
@@ -467,7 +512,7 @@ body {
   background: transparent;
   color: var(--gold-dark);
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 1.3rem;
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.08em;
@@ -538,17 +583,33 @@ body {
 
 .invitation-text {
   font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--ink-soft);
-  line-height: 1.95;
-  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--ink);
+  line-height: 2;
+  margin-bottom: 1.2rem;
   text-align: justify;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
-.invitation-text strong { color: var(--ink); font-weight: 600; }
-.invitation-text em { font-style: italic; color: var(--gold-dark); }
+.invitation-text strong {
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.invitation-text em {
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-style: italic;
+  color: var(--gold-dark);
+  font-weight: 400;
+}
 
 /* ── Event Detail Box ── */
 .event-details-box {
+  display: flex;
+  justify-content: center;
   background: var(--gold-pale);
   border: 1px solid var(--border-gold);
   border-top: 2px solid var(--gold);
@@ -557,11 +618,16 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.event-details-inner {
+  width: max-content;
+  max-width: 100%;
+}
+
 .event-detail-item {
   display: grid;
   grid-template-columns: 1.6rem 1fr;
   gap: 0.4rem 0.7rem;
-  align-items: start;
+  align-items: center;
   margin-bottom: 0.9rem;
   padding-bottom: 0.9rem;
   border-bottom: 1px solid rgba(201,168,108,0.2);
@@ -575,11 +641,12 @@ body {
 .event-detail-icon {
   font-size: 0.95rem;
   flex-shrink: 0;
-  margin-top: 0.15rem;
   opacity: 0.7;
 }
 
-.event-detail-content { flex: 1; }
+.event-detail-content {
+  text-align: left;
+}
 
 .event-detail-label {
   font-family: var(--font-display);
