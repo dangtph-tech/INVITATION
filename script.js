@@ -123,7 +123,7 @@ const displayGen      = document.getElementById('display-gen');
 const downloadBtn     = document.getElementById('download-btn');
 const toast           = document.getElementById('toast');
 const displaySalutation = document.getElementById('display-salutation');
-const inlineSalutation  = document.getElementById('inline-salutation');
+const inlineSalutations = document.querySelectorAll('.inline-salutation');
 const closingSalLower   = document.getElementById('closing-salutation-lower');
 const closingSalUpper   = document.getElementById('closing-salutation-upper');
 
@@ -223,8 +223,8 @@ form.addEventListener('submit', (e) => {
   displayName.textContent = name;
   displayGen.textContent  = gen;
   displaySalutation.textContent = salutation;
-  // inline salutation inside body text — lowercase
-  inlineSalutation.textContent = salutation.toLowerCase();
+  // inline salutations inside body text — lowercase
+  inlineSalutations.forEach(el => el.textContent = salutation.toLowerCase());
   // closing salutation
   if (closingSalLower) closingSalLower.textContent = salutation.toLowerCase();
   if (closingSalUpper) closingSalUpper.textContent = salutation.toLowerCase();
