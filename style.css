@@ -875,19 +875,58 @@ body {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-  .welcome-card {
-    padding: 2.2rem 1.6rem 2rem;
+
+/* --- PHONE (max 768px) — does NOT affect laptop (min-width: 768px block below) --- */
+@media (max-width: 768px) {
+  /* Music player: pull to bottom-center, shrink so it never covers text */
+  .player-container {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 340px;
+    padding: 0.5rem 1rem 0.8rem;
+    gap: 0.8rem;
   }
+  /* Keep hover working while staying centered */
+  .player-container:hover,
+  .player-container:focus-within {
+    transform: translateX(-50%) translateY(-3px);
+  }
+  /* Shrink vinyl disc */
+  .vinyl-record { width: 52px; height: 52px; }
+  .vinyl-wrapper { margin-top: -16px; }
+  /* Shrink player text */
+  .player-title { font-size: 0.85rem; }
+  .time-display { font-size: 0.65rem; }
+  .vinyl-tooltip { font-size: 0.65rem; top: -30px; white-space: nowrap; }
+
+  /* Add bottom padding to invitation card so last lines clear the music bar */
+  #invitation-screen > div { padding-bottom: 120px; }
+
+  /* Card body & text — tighter for small screen */
+  .card-body { padding: 1.5rem 1.2rem 1.5rem; }
+  .invitation-text { font-size: 0.95rem; line-height: 1.75; margin-bottom: 1rem; }
+  .invitee-name { font-size: 1.45rem; }
+  .recipient-info { margin-bottom: 1.2rem; }
+
+  /* Header refinements */
+  .card-header { padding: 2rem 1.2rem 1.2rem; }
+  .card-event-name { font-size: 1.35rem; }
+  .card-event-year { font-size: 0.54rem; letter-spacing: 0.1em; }
+}
+
+/* --- SMALL PHONE (max 480px) — extra tweaks on top of above --- */
+@media (max-width: 480px) {
+  .welcome-card { padding: 2.2rem 1.6rem 2rem; }
   .welcome-title { font-size: 1.25rem; }
   .logo-container img { width: 80px; height: 80px; }
-  .card-event-name { font-size: 1.4rem; }
-  .invitee-name { font-size: 1.35rem; }
-  .card-body { padding: 1.5rem 1.4rem; }
+  .card-body { padding: 1.4rem 1rem 1.4rem; }
   .action-buttons { flex-direction: column; gap: 0.6rem; }
   .action-btn { padding: 0.9rem; }
 }
 
+/* --- LAPTOP / DESKTOP (min 768px) — unchanged --- */
 @media (min-width: 768px) {
   .welcome-card { padding: 3.5rem 4rem; }
   .welcome-title { font-size: 1.8rem; }
@@ -1114,9 +1153,4 @@ body {
   transition: width 0.1s linear;
 }
 
-@media (max-width: 480px) {
-  .player-container {
-    padding: 0.6rem 1rem 1rem;
-    gap: 1rem;
-  }
-}
+
