@@ -1114,9 +1114,70 @@ body {
   transition: width 0.1s linear;
 }
 
-@media (max-width: 480px) {
+#invitation-screen > div {
+  padding-bottom: 100px;
+}
+
+@media (max-width: 768px) {
+  /* 1. Tối ưu Trình phát nhạc (không đè chữ) */
   .player-container {
-    padding: 0.6rem 1rem 1rem;
-    gap: 1rem;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 350px;
+    padding: 0.6rem 1rem 0.8rem;
+    gap: 0.8rem;
+  }
+  .player-container:hover, .player-container:focus-within {
+    transform: translateX(-50%) translateY(-3px);
+  }
+  .vinyl-wrapper {
+    margin-top: -15px;
+  }
+  .vinyl-record {
+    width: 50px;
+    height: 50px;
+  }
+  .vinyl-tooltip {
+    font-size: 0.65rem;
+    top: -30px;
+    padding: 0.3rem 0.6rem;
+  }
+  .player-title {
+    font-size: 0.85rem;
+  }
+  .time-display {
+    font-size: 0.65rem;
+  }
+
+  /* 2. Giảm Padding & Kích thước chữ thẻ thư mời */
+  .card-body {
+    padding: 1.5rem 1.2rem;
+  }
+  .invitation-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .invitee-name {
+    font-size: 1.5rem;
+  }
+  .recipient-info {
+    margin-bottom: 1.2rem;
+  }
+  
+  /* 3. Tối ưu Header */
+  .card-header {
+    padding: 2.2rem 1.2rem 1.2rem;
+  }
+  .card-header-logo {
+    width: 100px;
+  }
+  .card-event-name {
+    font-size: 1.35rem;
+  }
+  .card-event-year {
+    font-size: 0.55rem;
   }
 }
