@@ -462,7 +462,8 @@ downloadBtn.addEventListener('click', async () => {
     // Temporarily hide action buttons from screenshot
     actionButtons.style.visibility = 'hidden';
 
-    const canvas = await html2canvas(invitationCard, {
+    // 1. Capture the invitation card at 2× resolution
+    const cardCanvas = await html2canvas(invitationCard, {
       scale: 2,
       useCORS: true,
       allowTaint: true,
@@ -473,9 +474,53 @@ downloadBtn.addEventListener('click', async () => {
 
     actionButtons.style.visibility = '';
 
-    const dataURL = canvas.toDataURL('image/png', 1.0);
+    // 2. Create a 9:16 output canvas (1080×1920 — Facebook/Instagram Story standard)
+    const OUT_W = 1080;
+    const OUT_H = 1920;
+    const storyCanvas = document.createElement('canvas');
+    storyCanvas.width  = OUT_W;
+    storyCanvas.height = OUT_H;
+    const sCtx = storyCanvas.getContext('2d');
 
-    // Trigger download
+    // 3. Paint a warm cream background (matches the invitation palette)
+    const bgGrad = sCtx.createLinearGradient(0, 0, 0, OUT_H);
+    bgGrad.addColorStop(0,   '#FAF7EF');
+    bgGrad.addColorStop(0.5, '#F5EFE0');
+    bgGrad.addColorStop(1,   '#FAF7EF');
+    sCtx.fillStyle = bgGrad;
+    sCtx.fillRect(0, 0, OUT_W, OUT_H);
+
+    // 4. Draw a subtle gold border frame around the story
+    const FRAME = 28;
+    sCtx.strokeStyle = 'rgba(185,145,80,0.35)';
+    sCtx.lineWidth = 2;
+    sCtx.strokeRect(FRAME, FRAME, OUT_W - FRAME * 2, OUT_H - FRAME * 2);
+
+    // 5. Scale card to fit within 90% of story width, centered vertically
+    const maxCardW = OUT_W * 0.9;
+    const scale    = Math.min(maxCardW / cardCanvas.width, (OUT_H * 0.82) / cardCanvas.height);
+    const drawW    = cardCanvas.width  * scale;
+    const drawH    = cardCanvas.height * scale;
+    const drawX    = (OUT_W - drawW) / 2;
+    const drawY    = (OUT_H - drawH) / 2;
+
+    // Draw card with a soft drop shadow
+    sCtx.save();
+    sCtx.shadowColor   = 'rgba(44, 32, 24, 0.18)';
+    sCtx.shadowBlur    = 40;
+    sCtx.shadowOffsetY = 12;
+    sCtx.drawImage(cardCanvas, drawX, drawY, drawW, drawH);
+    sCtx.restore();
+
+    // 6. Add small branding label at bottom
+    sCtx.font = '500 26px "Cormorant Garamond", Georgia, serif';
+    sCtx.fillStyle = 'rgba(160, 120, 74, 0.5)';
+    sCtx.textAlign = 'center';
+    sCtx.fillText('YEC–NEU · 25 Năm · Tapestry of Remembrance', OUT_W / 2, OUT_H - 52);
+
+    // 7. Export
+    const dataURL = storyCanvas.toDataURL('image/png', 1.0);
+
     const a  = document.createElement('a');
     const safeName = displayName.textContent.replace(/\s+/g, '_');
     a.href     = dataURL;
@@ -484,7 +529,7 @@ downloadBtn.addEventListener('click', async () => {
     a.click();
     document.body.removeChild(a);
 
-    showToast('🎉 Thiệp đã được tải về thành công!');
+    showToast('🎉 Thiệp Story (9:16) đã được tải về!');
   } catch (err) {
     console.error('html2canvas error:', err);
     actionButtons.style.visibility = '';
