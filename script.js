@@ -490,35 +490,16 @@ downloadBtn.addEventListener('click', async () => {
     sCtx.fillStyle = bgGrad;
     sCtx.fillRect(0, 0, OUT_W, OUT_H);
 
-    // 4. Draw a subtle gold border frame around the story
-    const FRAME = 28;
-    sCtx.strokeStyle = 'rgba(185,145,80,0.35)';
-    sCtx.lineWidth = 2;
-    sCtx.strokeRect(FRAME, FRAME, OUT_W - FRAME * 2, OUT_H - FRAME * 2);
+    // 4. Scale card to fill full width (1080px), center vertically
+    const scale = Math.min(OUT_W / cardCanvas.width, OUT_H / cardCanvas.height);
+    const drawW = cardCanvas.width  * scale;
+    const drawH = cardCanvas.height * scale;
+    const drawX = (OUT_W - drawW) / 2;
+    const drawY = (OUT_H - drawH) / 2;
 
-    // 5. Scale card to fit within 90% of story width, centered vertically
-    const maxCardW = OUT_W * 0.9;
-    const scale    = Math.min(maxCardW / cardCanvas.width, (OUT_H * 0.82) / cardCanvas.height);
-    const drawW    = cardCanvas.width  * scale;
-    const drawH    = cardCanvas.height * scale;
-    const drawX    = (OUT_W - drawW) / 2;
-    const drawY    = (OUT_H - drawH) / 2;
-
-    // Draw card with a soft drop shadow
-    sCtx.save();
-    sCtx.shadowColor   = 'rgba(44, 32, 24, 0.18)';
-    sCtx.shadowBlur    = 40;
-    sCtx.shadowOffsetY = 12;
     sCtx.drawImage(cardCanvas, drawX, drawY, drawW, drawH);
-    sCtx.restore();
 
-    // 6. Add small branding label at bottom
-    sCtx.font = '500 26px "Cormorant Garamond", Georgia, serif';
-    sCtx.fillStyle = 'rgba(160, 120, 74, 0.5)';
-    sCtx.textAlign = 'center';
-    sCtx.fillText('YEC–NEU · 25 Năm · Tapestry of Remembrance', OUT_W / 2, OUT_H - 52);
-
-    // 7. Export
+    // 5. Export
     const dataURL = storyCanvas.toDataURL('image/png', 1.0);
 
     const a  = document.createElement('a');
