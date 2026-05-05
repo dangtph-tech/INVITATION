@@ -490,12 +490,12 @@ downloadBtn.addEventListener('click', async () => {
     sCtx.fillStyle = bgGrad;
     sCtx.fillRect(0, 0, OUT_W, OUT_H);
 
-    // 4. Scale card to fill full width (1080px), center vertically
-    const scale = Math.min(OUT_W / cardCanvas.width, OUT_H / cardCanvas.height);
-    const drawW = cardCanvas.width  * scale;
+    // 4. Scale card to fill full width (edge-to-edge, no white border)
+    const scale = OUT_W / cardCanvas.width;  // always fill full width
+    const drawW = OUT_W;
     const drawH = cardCanvas.height * scale;
-    const drawX = (OUT_W - drawW) / 2;
-    const drawY = (OUT_H - drawH) / 2;
+    const drawX = 0;
+    const drawY = (OUT_H - drawH) / 2;      // center vertically
 
     sCtx.drawImage(cardCanvas, drawX, drawY, drawW, drawH);
 

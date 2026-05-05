@@ -593,7 +593,7 @@ body {
   color: var(--ink);
   line-height: 2;
   margin-bottom: 1.2rem;
-  text-align: justify;
+  text-align: left;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
